@@ -5,6 +5,11 @@ VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BankManagementSystem", "BankManagementSystem.vcxproj", "{51510643-7C58-45ED-A1F3-DCB06940E6A2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{1A407899-E8C8-4E5B-B82A-271F846B620C}"
+	ProjectSection(SolutionItems) = preProject
+		BANK.db = BANK.db
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
