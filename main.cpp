@@ -121,6 +121,19 @@ static int insertData(const char* s)
 // -------------------------------------------
 */
 
+static int callback(void* NotUsed, int argc, char** argv, char** azColName)
+{
+
+	for (int i = 0; i < argc; i++)
+	{
+		//col name and value
+		std::cout << azColName[i] << ": " << argv[i] << std::endl;
+	}
+
+
+	return 0;
+}
+
 int login()
 {
 	// open and connect to DB
@@ -152,16 +165,71 @@ int login()
 
 
 	if (rc == SQLITE_OK) {
-		sqlite3_bind_parameter_index(res, "@email");
+		int index = sqlite3_bind_parameter_index(res, "@email");
+		sqlite3_bind_text(res, index, email.c_str(), sizeof(email), SQLITE_STATIC);
+	}
+	else {
+		std::cerr << "Unable to create statement '" << sql << "': " << sqlite3_errmsg(DB)<< std::endl;
 	}
 
 
 
-
+	sqlite3_finalize(res);
 	sqlite3_close(DB);
 	return 0;
 }
-void createUser() {}
+int createUser() 
+{
+	std::string fname, lname, email, address, password;
+	char gender = 'z';
+	int phoneNum;
+
+	std::cout << "First Name: ";
+	std::cin >> fname;
+	std::cout << "Last Name: ";
+	std::cin >> lname;
+
+	int gender_loop = 1;
+	while (gender_loop)
+	{
+		std::cout << "Gender(M/F): ";
+		std::cin >> gender;
+		gender = toupper(gender);
+
+		switch (gender)
+		{
+		case 'M':
+			gender_loop = 0;
+			break;
+		case 'F':
+			gender_loop = 0;
+			break;
+		default:
+			std::cout << "Not a valid input" << std::endl;
+		}
+	}
+	
+
+
+
+
+	// open and connect to DB
+	sqlite3* DB;
+	char* err_msg = 0;
+	sqlite3_stmt* res;
+	int rc = sqlite3_open(dir, &DB);
+
+	if (rc != SQLITE_OK) {
+		std::cout << "Cannot open database: " << sqlite3_errmsg(DB) << std::endl;
+		sqlite3_close(DB);
+
+		return 1;
+	}
+
+	const char* sql = "INSERT INTO CUSTOMER_PERSONAL_INFO (FIRST_NAME, LAST_NAME, DATE_OF_BIRTH, GENDER, EMAIL, PHONE, ADDRESS, PASSWORD) VALUES();";
+
+	return 0;
+}
 
 void welcome()
 {
